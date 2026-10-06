@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model United Nations 2027 | Coming Soon</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        un: {
+                            blue: '#009edb',
+                            dark: '#031122',
+                            card: '#0a1d37',
+                            gold: '#d4af37',
+                            goldhover: '#f3ce56',
+                            accent: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #031122;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Glassmorphism styling */
+        .glass-panel {
+            background: rgba(10, 29, 55, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .glass-panel-hover:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 158, 219, 0.15);
+        }
+
+        /* Gold glow effects */
+        .gold-glow {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #fff 0%, #d4af37 50%, #f3ce56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Canvas canvas position */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #031122;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #009edb;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between selection:bg-un-gold selection:text-un-dark">
+
+    <!-- Interactive Background Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="relative z-10 w-full border-b border-white/10 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-10 h-10 rounded-full border border-un-gold flex items-center justify-center bg-un-dark text-un-gold">
+                    <i class="fa-solid font-bold fa-globe text-xl text-un-blue animate-spin-slow"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-wider serif-font text-white block leading-none">GLOBAL MUN</span>
+                    <span class="text-xs text-un-gold tracking-widest uppercase">Conference 2027</span>
+                </div>
+            </div>
+
+            <!-- Status Badge & Action -->
+            <div class="flex items-center space-x-4">
+                <span class="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-un-blue/10 text-un-blue border border-un-blue/30">
+                    <span class="w-2 h-2 rounded-full bg-un-blue mr-2 animate-ping"></span>
+                    Simulating Standard Diplomacy
+                </span>
+                <a href="#register" class="bg-gradient-to-r from-un-gold to-yellow-600 hover:from-yellow-500 hover:to-un-gold text-un-dark font-semibold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all duration-300 shadow-md transform hover:-translate-y-0.5">
+                    Pre-Register
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-20">
+
+        <!-- Hero & Countdown Section -->
+        <section class="text-center pt-8 md:pt-14 space-y-8">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-un-gold/40 bg-un-gold/10 text-un-gold text-xs font-semibold tracking-widest uppercase mb-2">
+                <i class="fa-solid fa-certificate"></i>
+                <span>The Premier International Diplomatic Simulation</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold serif-font tracking-tight text-white max-w-4xl mx-auto leading-tight">
+                Shaping Tomorrow's <span class="text-gold-gradient">Global Leaders</span>
+            </h1>
+
+            <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                Join delegates from over 80 nations to debate, negotiate, and solve the world's most pressing diplomatic challenges. Official registration opens soon.
+            </p>
+
+            <!-- Countdown Timer Card -->
+            <div class="max-w-3xl mx-auto glass-panel p-6 sm:p-8 rounded-2xl border border-un-gold/30 gold-glow">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-un-gold mb-6">Opening Ceremony Countdown</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="countdown">
+                    <div class="p-3 sm:p-4 rounded-xl bg-un-dark/60 border border-white/5 text-center">
+                        <span id="cd-days" class="text-3xl sm:text-5xl font-extrabold text-white font-mono block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider mt-1 block">Days</span>
+                    </div>
+                    <div class="p-3 sm:p-4 rounded-xl bg-un-dark/60 border border-white/5 text-center">
+                        <span id="cd-hours" class="text-3xl sm:text-5xl font-extrabold text-white font-mono block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider mt-1 block">Hours</span>
+                    </div>
+                    <div class="p-3 sm:p-4 rounded-xl bg-un-dark/60 border border-white/5 text-center">
+                        <span id="cd-minutes" class="text-3xl sm:text-5xl font-extrabold text-white font-mono block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider mt-1 block">Minutes</span>
+                    </div>
+                    <div class="p-3 sm:p-4 rounded-xl bg-un-dark/60 border border-white/5 text-center">
+                        <span id="cd-seconds" class="text-3xl sm:text-5xl font-extrabold text-un-gold font-mono block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider mt-1 block">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Diplomatic Quote Generator -->
+        <section class="max-w-4xl mx-auto">
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 relative overflow-hidden text-center border-l-4 border-l-un-gold">
+                <i class="fa-solid fa-quote-left text-4xl text-un-gold/20 absolute top-4 left-4"></i>
+                <div id="quote-container" class="relative z-10 space-y-4">
+                    <p id="quote-text" class="text-lg sm:text-xl italic serif-font text-slate-200">
+                        "Diplomacy is the art of letting someone else have your way."
+                    </p>
+                    <p id="quote-author" class="text-xs font-semibold uppercase tracking-widest text-un-gold">
+                        — Sir C. Keeble
+                    </p>
+                </div>
+                <button id="btn-next-quote" class="mt-6 inline-flex items-center space-x-2 text-xs font-semibold text-un-blue hover:text-un-gold transition-colors duration-200 uppercase tracking-wider">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <span>Generate Another Quote</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Committee Explorer Section -->
+        <section class="space-y-8">
+            <div class="text-center space-y-2">
+                <span class="text-xs font-semibold text-un-gold uppercase tracking-widest">Sneak Peek</span>
+                <h2 class="text-3xl font-bold serif-font text-white">Simulated Committees</h2>
+                <p class="text-slate-400 text-sm max-w-lg mx-auto">Select a committee to preview agenda topics and delegate capacity.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Committee 1 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group" onclick="openCommitteeModal('UNSC')">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-un-blue/20 border border-un-blue/40 flex items-center justify-center text-un-blue group-hover:bg-un-blue group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-shield-halved text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-un-gold transition-colors">UNSC</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">United Nations Security Council</p>
+                        <p class="text-sm text-slate-300 font-light line-clamp-2">Addressing global peacekeeping operations and cyber warfare threats in modern international security.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-un-gold font-medium">Advanced</span>
+                        <span class="text-slate-400 group-hover:text-white transition-colors">Explore <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                    </div>
+                </div>
+
+                <!-- Committee 2 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group" onclick="openCommitteeModal('DISEC')">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-un-blue/20 border border-un-blue/40 flex items-center justify-center text-un-blue group-hover:bg-un-blue group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-gun text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-un-gold transition-colors">DISEC</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Disarmament & International Security</p>
+                        <p class="text-sm text-slate-300 font-light line-clamp-2">Preventing an arms race in outer space and regulating autonomous weapons systems.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-un-gold font-medium">Beginner / Intermediate</span>
+                        <span class="text-slate-400 group-hover:text-white transition-colors">Explore <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                    </div>
+                </div>
+
+                <!-- Committee 3 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group" onclick="openCommitteeModal('UNHRC')">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-un-blue/20 border border-un-blue/40 flex items-center justify-center text-un-blue group-hover:bg-un-blue group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-hands-holding-child text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-un-gold transition-colors">UNHRC</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Human Rights Council</p>
+                        <p class="text-sm text-slate-300 font-light line-clamp-2">Protecting climate refugees and safeguarding human rights in digital surveillance states.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-un-gold font-medium">All Levels</span>
+                        <span class="text-slate-400 group-hover:text-white transition-colors">Explore <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                    </div>
+                </div>
+
+                <!-- Committee 4 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group" onclick="openCommitteeModal('PRESS')">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-un-blue/20 border border-un-blue/40 flex items-center justify-center text-un-blue group-hover:bg-un-blue group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-newspaper text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-un-gold transition-colors">International Press</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Journalism & Media Corps</p>
+                        <p class="text-sm text-slate-300 font-light line-clamp-2">Investigating committee debates, publishing real-time press releases, and holding delegates accountable.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-un-gold font-medium">Specialized</span>
+                        <span class="text-slate-400 group-hover:text-white transition-colors">Explore <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Registration / Pre-Interest Section -->
+        <section id="register" class="max-w-3xl mx-auto glass-panel p-8 sm:p-10 rounded-3xl border border-un-gold/30 gold-glow relative">
+            <div id="form-container" class="space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-semibold text-un-gold uppercase tracking-widest">Early Access</span>
+                    <h2 class="text-3xl font-bold serif-font text-white">Pre-Register for Priority Allocation</h2>
+                    <p class="text-slate-300 text-sm">Be the first to secure your desired country matrix and committee preferences.</p>
+                </div>
+
+                <form id="preRegForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Full Name</label>
+                            <input type="text" id="regName" required placeholder="Delegate Name" class="w-full px-4 py-3 rounded-xl bg-un-dark/80 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-un-gold transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Email Address</label>
+                            <input type="email" id="regEmail" required placeholder="delegate@institution.edu" class="w-full px-4 py-3 rounded-xl bg-un-dark/80 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-un-gold transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-300 mb-2">Desired Role</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="role" value="Delegate" checked class="peer hidden">
+                                <div class="p-3 text-center rounded-xl bg-un-dark/60 border border-white/10 peer-checked:border-un-gold peer-checked:bg-un-gold/20 text-xs font-medium text-slate-300 peer-checked:text-un-gold transition-all">
+                                    Delegate
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="role" value="Executive Board" class="peer hidden">
+                                <div class="p-3 text-center rounded-xl bg-un-dark/60 border border-white/10 peer-checked:border-un-gold peer-checked:bg-un-gold/20 text-xs font-medium text-slate-300 peer-checked:text-un-gold transition-all">
+                                    Executive Board
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="role" value="Press Corps" class="peer hidden">
+                                <div class="p-3 text-center rounded-xl bg-un-dark/60 border border-white/10 peer-checked:border-un-gold peer-checked:bg-un-gold/20 text-xs font-medium text-slate-300 peer-checked:text-un-gold transition-all">
+                                    Press Corps
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="role" value="Observer" class="peer hidden">
+                                <div class="p-3 text-center rounded-xl bg-un-dark/60 border border-white/10 peer-checked:border-un-gold peer-checked:bg-un-gold/20 text-xs font-medium text-slate-300 peer-checked:text-un-gold transition-all">
+                                    Observer
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-un-gold to-yellow-600 hover:from-yellow-500 hover:to-un-gold text-un-dark font-bold text-sm uppercase tracking-wider transition-all duration-300 shadow-lg transform hover:-translate-y-0.5">
+                        Claim Pre-Registration Pass
+                    </button>
+                </form>
+            </div>
+
+            <!-- Dynamic Pass/Badge Result Container (Hidden Initially) -->
+            <div id="badge-container" class="hidden text-center space-y-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 text-green-400 mb-2">
+                    <i class="fa-solid fa-check text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white serif-font">You are Pre-Registered!</h3>
+                <p class="text-xs text-slate-300">Here is your official delegate pre-clearance pass.</p>
+
+                <!-- Printable Delegate Badge Card -->
+                <div id="printableBadge" class="max-w-md mx-auto p-6 rounded-2xl bg-gradient-to-br from-un-card to-un-dark border-2 border-un-gold text-left space-y-4 shadow-2xl relative overflow-hidden">
+                    <div class="flex justify-between items-start border-b border-white/10 pb-4">
+                        <div>
+                            <span class="text-[10px] text-un-gold uppercase tracking-widest font-bold">Global MUN 2027</span>
+                            <h4 id="badgeName" class="text-xl font-bold text-white serif-font">Delegate Name</h4>
+                            <p id="badgeRole" class="text-xs text-un-blue font-semibold uppercase">Delegate</p>
+                        </div>
+                        <div class="text-right">
+                            <i class="fa-solid fa-award text-3xl text-un-gold"></i>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
+                        <div>
+                            <span class="text-slate-500 block">STATUS</span>
+                            <span class="text-green-400 font-bold">PRIORITY CONFIRMED</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block">PASS CODE</span>
+                            <span id="badgeCode" class="font-mono text-white">MUN-2027-8921</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-[9px] text-slate-400">Official Pre-Clearance Credentials</span>
+                        <i class="fa-solid fa-qrcode text-2xl text-slate-300"></i>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-un-blue text-white text-xs font-semibold hover:bg-blue-600 transition-colors">
+                        <i class="fa-solid fa-print mr-2"></i> Print / Save Badge
+                    </button>
+                    <button onclick="resetRegistration()" class="px-5 py-2.5 rounded-xl bg-white/10 text-slate-300 text-xs font-semibold hover:bg-white/20 transition-colors">
+                        Register Another
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Accordion Section -->
+        <section class="max-w-3xl mx-auto space-y-6">
+            <div class="text-center space-y-2">
+                <span class="text-xs font-semibold text-un-gold uppercase tracking-widest">Inquiries</span>
+                <h2 class="text-3xl font-bold serif-font text-white">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-3">
+                <!-- FAQ Item 1 -->
+                <div class="glass-panel rounded-xl overflow-hidden border border-white/10">
+                    <button onclick="toggleFaq(this)" class="w-full p-4 text-left flex justify-between items-center text-sm font-semibold text-white hover:text-un-gold transition-colors">
+                        <span>When will official registrations and country matrix be released?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div class="hidden p-4 pt-0 text-xs text-slate-300 leading-relaxed border-t border-white/5 mt-1">
+                        Official registrations and the country allocation matrix will open 30 days prior to the conference. Pre-registered participants will receive priority access 48 hours before public release.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="glass-panel rounded-xl overflow-hidden border border-white/10">
+                    <button onclick="toggleFaq(this)" class="w-full p-4 text-left flex justify-between items-center text-sm font-semibold text-white hover:text-un-gold transition-colors">
+                        <span>Can beginner delegates participate?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div class="hidden p-4 pt-0 text-xs text-slate-300 leading-relaxed border-t border-white/5 mt-1">
+                        Absolutely! We offer dedicated beginner workshops, study guides, and beginner-friendly committees like UNHRC and DISEC with patient executive board members.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="glass-panel rounded-xl overflow-hidden border border-white/10">
+                    <button onclick="toggleFaq(this)" class="w-full p-4 text-left flex justify-between items-center text-sm font-semibold text-white hover:text-un-gold transition-colors">
+                        <span>Will there be online or hybrid participation options?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div class="hidden p-4 pt-0 text-xs text-slate-300 leading-relaxed border-t border-white/5 mt-1">
+                        Yes, selected committees will feature hybrid tracks to accommodate international delegates who cannot travel in person.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="relative z-10 border-t border-white/10 glass-panel mt-16 py-8 text-center text-xs text-slate-400 space-y-4">
+        <div class="flex justify-center space-x-6 text-lg">
+            <a href="#" class="text-slate-400 hover:text-un-gold transition-colors"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="text-slate-400 hover:text-un-gold transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" class="text-slate-400 hover:text-un-gold transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="text-slate-400 hover:text-un-gold transition-colors"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        <p>© 2027 Global Model United Nations Secretariat. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Committee Detail Modal -->
+    <div id="committeeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md hidden">
+        <div class="glass-panel max-w-lg w-full rounded-2xl p-6 space-y-4 border border-un-gold/40 relative">
+            <button onclick="closeCommitteeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 id="modalTitle" class="text-2xl font-bold text-white serif-font">Committee Title</h3>
+            <p id="modalSub" class="text-xs text-un-gold uppercase font-semibold">Committee Subtitle</p>
+            <p id="modalDesc" class="text-xs text-slate-300 leading-relaxed">Detailed description will appear here.</p>
+            <div id="modalTopics" class="space-y-2 pt-2 border-t border-white/10 text-xs">
+                <span class="font-bold text-white">Sample Agenda Topics:</span>
+                <ul id="modalTopicList" class="list-disc list-inside text-slate-300 space-y-1"></ul>
+            </div>
+            <button onclick="closeCommitteeModal()" class="w-full py-2.5 rounded-xl bg-un-gold text-un-dark font-bold text-xs uppercase tracking-wider hover:bg-yellow-500 transition-colors">
+                Close Preview
+            </button>
+        </div>
+    </div>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        // --- 1. Background Interactive Particle Canvas Animation ---
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 15), 80);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        // --- 2. Countdown Timer Logic ---
+        // Setting target date to 90 days from current date
+        const targetDate = new Date().getTime() + (90 * 24 * 60 * 60 * 1000);
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('cd-hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('cd-minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('cd-seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        // --- 3. Diplomatic Quotes Generator ---
+        const quotes = [
+            { quote: "Diplomacy is the art of letting someone else have your way.", author: "Sir C. Keeble" },
+            { quote: "To organize peace, it is not enough to talk about peace. One must act.", author: "Dag Hammarskjöld" },
+            { quote: "Peace cannot be kept by force; it can only be achieved by understanding.", author: "Albert Einstein" },
+            { quote: "More than ever before in human history, we share a common destiny.", author: "Kofi Annan" },
+            { quote: "The United Nations was created not to lead mankind to heaven, but to save humanity from hell.", author: "Dag Hammarskjöld" }
+        ];
+
+        let quoteIndex = 0;
+        document.getElementById('btn-next-quote').addEventListener('click', () => {
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+            document.getElementById('quote-text').innerText = `"${quotes[quoteIndex].quote}"`;
+            document.getElementById('quote-author').innerText = `— ${quotes[quoteIndex].author}`;
+        });
+
+        // --- 4. Committee Modal Logic ---
+        const committeeData = {
+            UNSC: {
+                title: "United Nations Security Council",
+                sub: "Primary organ for maintaining international peace and security.",
+                desc: "Delegates will engage in intense crises negotiations and resolution drafting regarding high-stakes global security threats.",
+                topics: ["Mitigating tensions in cyber warfare protocols", "Re-evaluating peacekeeping mandates in conflict zones"]
+            },
+            DISEC: {
+                title: "Disarmament & International Security (GA1)",
+                sub: "Addressing global arms challenges and non-proliferation.",
+                desc: "Focuses on strategic balance, military technology regulation, and international security frameworks.",
+                topics: ["Regulating lethal autonomous weapon systems (LAWS)", "Preventing an arms race in outer space"]
+            },
+            UNHRC: {
+                title: "Human Rights Council",
+                sub: "Strengthening the promotion and protection of human rights.",
+                desc: "Debating critical global humanitarian concerns, freedom of expression, and fundamental human rights violations.",
+                topics: ["Protecting rights of cross-border climate migrants", "Safeguarding privacy against state surveillance"]
+            },
+            PRESS: {
+                title: "International Press Corps",
+                sub: "Journalism, real-time reporting, and press conferences.",
+                desc: "Journalists cover committee proceedings, write investigative articles, and hold press conferences to hold delegates accountable.",
+                topics: ["Journalistic ethics in high-stakes diplomacy", "Investigative coverage of UNSC resolutions"]
+            }
+        };
+
+        function openCommitteeModal(key) {
+            const data = committeeData[key];
+            if (!data) return;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalSub').innerText = data.sub;
+            document.getElementById('modalDesc').innerText = data.desc;
+
+            const topicList = document.getElementById('modalTopicList');
+            topicList.innerHTML = '';
+            data.topics.forEach(t => {
+                const li = document.createElement('li');
+                li.innerText = t;
+                topicList.appendChild(li);
+            });
+
+            document.getElementById('committeeModal').classList.remove('hidden');
+        }
+
+        function closeCommitteeModal() {
+            document.getElementById('committeeModal').classList.add('hidden');
+        }
+
+        // --- 5. Form & Badge Handling ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const code = 'MUN-2027-' + Math.floor(1000 + Math.random() * 9000);
+
+            document.getElementById('badgeName').innerText = name;
+            document.getElementById('badgeRole').innerText = role;
+            document.getElementById('badgeCode').innerText = code;
+
+            document.getElementById('form-container').classList.add('hidden');
+            document.getElementById('badge-container').classList.remove('hidden');
+        }
+
+        function resetRegistration() {
+            document.getElementById('preRegForm').reset();
+            document.getElementById('badge-container').classList.add('hidden');
+            document.getElementById('form-container').classList.remove('hidden');
+        }
+
+        // --- 6. FAQ Accordion Handler ---
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Start initialization loops on window load
+        window.onload = function() {
+            animateCanvas();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        };
+    </script>
+</body>
+</html>
